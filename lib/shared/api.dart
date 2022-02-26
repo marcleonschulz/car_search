@@ -1,4 +1,4 @@
-import 'package:car_search/models/car.dart';
+import 'package:car_search/shared/models/car.dart';
 import 'package:dio/dio.dart';
 
 class DioClient {
@@ -6,11 +6,25 @@ class DioClient {
 
   final _baseUrl = "https://api.marc-schulz.tech";
 
-  late Car car;
-  getCar({required String hsn,required String tsn}) async {
+  Car car = Car();
+  getCar({required String hsn,required String tsn}){
+    if (hsn != "" && tsn != ""){
+      return fetcher(url: '$_baseUrl/search-$hsn-$tsn');
+    } else if (hsn != "" && tsn == ""){
+      return fetcher(url: '$_baseUrl/hsn-search-$hsn');
+    } else {
+      car.error = "Sie können nichts nichts suchen";
+      return car;
+    }
+
+    
+  }
+
+  fetcher({required url}) async {
     try {
+
       // Perform GET request to the endpoint "/users/<hsn-tsn>"
-      Response carData = await _dio.get(_baseUrl + '/search-$hsn-$tsn');
+      Response carData = await _dio.get(url);
 
       // Prints the raw data returned by the server
       print('Car Info: ${carData.data}');
@@ -21,7 +35,7 @@ class DioClient {
       return car;
     } on DioError catch (e){
       if (e.response != null) {
-        car.error = "NO API";
+        car.error = "Es gibt ein network error!";
         return  car;
       } else{
         car.error = e.message;

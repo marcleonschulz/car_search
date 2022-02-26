@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:car_search/models/car.dart';
-import 'package:car_search/api.dart';
+import 'package:car_search/shared/models/car.dart';
+import 'package:car_search/shared/api.dart';
 
 class CarFetch with ChangeNotifier{
   Car _cars = Car();

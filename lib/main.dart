@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:car_search/screen/home.dart';
+import 'package:car_search/theme.dart';
+import 'package:car_search/shared/routes.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
@@ -11,9 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text("HIT IT"),),
-        body: const HomeScreen(),),
+      darkTheme: ThemeData.dark(),
+      theme: appTheme,
+      home: const HomeScreen(),
+      routes: appRoutes,
+      //home: Scaffold(
+      //  appBar: AppBar(title: const Text("carSearch")),
+      //  body: const HomeScreen(),
+      //),
     );
   }
 }
